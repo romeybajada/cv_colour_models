@@ -57,13 +57,18 @@ def rgb_to_hsv(r: float, g: float, b: float) -> tuple[float, float, float]:
 
 # Convert a single RGB colour → YCbCr
 def rgb_to_ycbcr(r: float, g: float, b: float, standard: str = "BT.601") -> tuple[float, float, float]:
-    kr = _KR_601 if standard == "BT.601" else _KR_709
-    kb = _KB_601 if standard == "BT.601" else _KB_709
-    kg = 1.0 - kr - kb
+    R = r * 255.0
+    G = g * 255.0
+    B = b * 255.0
 
-    y  =  kr * r + kg * g + kb * b
-    cb = (b - y) / (2.0 * (1.0 - kb))
-    cr = (r - y) / (2.0 * (1.0 - kr))
+    if standard == "BT.601":
+        y  =  0.299  * R + 0.587  * G + 0.114  * B + 16
+        cb = -0.1687 * R - 0.3313 * G + 0.500  * B + 128
+        cr =  0.500  * R - 0.4187 * G - 0.0813 * B + 128
+    else:  # BT.709
+        y  =  0.2126 * R + 0.7152 * G + 0.0722 * B + 16
+        cb = -0.1146 * R - 0.3854 * G + 0.500  * B + 128
+        cr =  0.500  * R - 0.4542 * G - 0.0458 * B + 128
 
     return y, cb, cr
 
@@ -130,18 +135,15 @@ def rgb_to_hsv_steps(r: float, g: float, b: float) -> list[dict]:
 
 # Return RGB → YCbCr conversion as step-by-step trace
 def rgb_to_ycbcr_steps(r: float, g: float, b: float, standard: str = "BT.601") -> list[dict]:
-    kr = _KR_601 if standard == "BT.601" else _KR_709
-    kb = _KB_601 if standard == "BT.601" else _KB_709
-    kg = 1.0 - kr - kb
+    R, G, B = r * 255.0, g * 255.0, b * 255.0
     y, cb, cr = rgb_to_ycbcr(r, g, b, standard)
 
     return [
-        {"step": "Inputs",   "formula": "R, G, B",                                         "value": f"{r:.3f}, {g:.3f}, {b:.3f}"},
-        {"step": "Coeffs",   "formula": f"Kr={kr}, Kg={kg:.3f}, Kb={kb} ({standard})",     "value": "—"},
-        {"step": "Y (Luma)", "formula": f"Y = {kr}R + {kg:.3f}G + {kb}B",                 "value": f"{y:.4f}"},
-        {"step": "Cb",       "formula": "Cb = (B − Y) / (2(1 − Kb))",                     "value": f"{cb:.4f}"},
-        {"step": "Cr",       "formula": "Cr = (R − Y) / (2(1 − Kr))",                     "value": f"{cr:.4f}"},
-        {"step": "Note",     "formula": "Cb, Cr centred at 0 (add 0.5 for display)",       "value": f"Cb+0.5={cb+0.5:.4f}, Cr+0.5={cr+0.5:.4f}"},
+        {"step": "Inputs",    "formula": "R, G, B (scaled to 0–255)",                    "value": f"{R:.1f}, {G:.1f}, {B:.1f}"},
+        {"step": "Y (Luma)",  "formula": "Y = 0.299R + 0.587G + 0.114B + 16",            "value": f"{y:.4f}"},
+        {"step": "Cb",        "formula": "Cb = -0.1687R - 0.3313G + 0.500B + 128",       "value": f"{cb:.4f}"},
+        {"step": "Cr",        "formula": "Cr = 0.500R - 0.4187G - 0.0813B + 128",        "value": f"{cr:.4f}"},
+        {"step": "Note",      "formula": "Cb=Cr=128 when R=G=B (neutral grey)",          "value": f"Cb={cb:.1f}, Cr={cr:.1f}"},
     ]
 
 

@@ -20,7 +20,7 @@ import streamlit as st
 from PIL import Image
 from streamlit_image_coordinates import streamlit_image_coordinates
 
-# 
+# To import utils.py from the same directory
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils import (
     rgb_to_hsv as _utils_hsv,
