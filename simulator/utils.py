@@ -1,22 +1,6 @@
-"""
-Colour Space Conversion Utilities
-
-Step-by-step conversion traces for the Equation Demonstrator tab.
-Single-pixel conversion functions for computing final results.
-All single-pixel functions take float inputs normalised to [0, 1] for RGB.
-"""
-
 import numpy as np
 
 # CONSTANTS
-# YCbCr BT.601 coefficients (standard definition)
-_KR_601 = 0.299
-_KB_601 = 0.114
-
-# YCbCr BT.709 coefficients (high definition)
-_KR_709 = 0.2126
-_KB_709 = 0.0722
-
 # CIE standard illuminant D65 (the white point sRGB is defined against)
 _D65_X = 0.95047
 _D65_Y = 1.00000
@@ -75,10 +59,10 @@ def rgb_to_ycbcr(r: float, g: float, b: float, standard: str = "BT.601") -> tupl
 
 # Apply sRGB gamma linearisation to a single channel
 def _srgb_to_linear(c: float) -> float:
-
     if c <= 0.04045:
         return c / 12.92
     return ((c + 0.055) / 1.055) ** 2.4
+
 
 # CIE LAB cube-root compression
 def _f_lab(t: float) -> float:
