@@ -1,31 +1,11 @@
 # Colour Models and Colour Spaces
-**ARI 2129 — Principles of Computer Vision for AI | Group 1**
+**ARI 2129 — Principles of Computer Vision for AI**
+
+**Group Members:  Romey Bajada, Mia Busuttil, Julia-Kay Gutiza, Rebecca Hayward, Kyra Talbot**
+
+Block 1 — Image Data: Colour Models and Colour Spaces
 
 A Computer Vision Learning Pack on colour models and colour spaces: RGB, HSV, YCbCr, and CIELAB — covering conversion equations, the purpose of each space, and what breaks when you use the wrong one.
-
----
-
-## Group Members
-
-- Romey Bajada
-- Mia Busuttil
-- Julia-Kay Gutiza
-- Kyra Talbot
-- Rebecca Hayward
----
-
-## Topic
-
-**Block 1 — Image Data: Colour Models and Colour Spaces**
-
-Each colour space exists to solve a specific problem:
-
-| Space | Why it exists |
-|-------|--------------|
-| **RGB** | Native format for screens and cameras — encodes colour as three light intensities |
-| **HSV** | Separates hue, saturation, and brightness to match human colour intuition; preferred for colour-based segmentation |
-| **YCbCr** | Separates luma from chroma to exploit human insensitivity to colour detail; used inside JPEG and broadcast video (BT.601) |
-| **CIELAB** | Perceptually uniform space where equal numerical distances look equally different; the standard for colour quality measurement (ΔE) |
 
 ---
 
@@ -42,14 +22,15 @@ Each colour space exists to solve a specific problem:
 ├── quiz_link.txt
 ├── slides.pptx
 ├── slides.pdf
-├── walkthrough.ipynb
-├── test_image.png      # demo image for notebook
-├── tulip.png           # demo image
-├── people.png          # demo image
+├── walkthrough/
+│   ├── walkthrough.ipynb
+│   ├── test_image.png      # demo image for notebook
+│   ├── tulip.png           # demo image
+│   └── people.png          # demo image
 ├── ai_journal.pdf
 ├── simulator/
 │   ├── app.py
-│   ├── utils.py        # util functions seperated to keep app.py clean
+│   ├── utils.py            # util functions seperated to keep app.py clean
 │   ├── requirements.txt
 │   └── README.md
 └── further_reading/
@@ -63,7 +44,7 @@ Each colour space exists to solve a specific problem:
 ### 1. Clone the repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/romeybajada/cv_colour_models.git
 cd cv_colour_models
 ```
 
@@ -135,7 +116,7 @@ jupyter notebook walkthrough.ipynb
 | 5 | Annotated Code Walkthrough | `walkthrough.ipynb` |
 | 6 | AI Usage Journal | `ai_journal.pdf` |
 
-The quiz is hosted on Google Forms — link in `quiz_link.txt`.
+The quiz is hosted on Google Forms: https://forms.gle/ZRaviPxEhH172LhS9
 
 Further reading papers are in `further_reading/` with citations and summaries in `study_notes.pdf`.
 
